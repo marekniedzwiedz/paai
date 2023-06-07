@@ -1,12 +1,15 @@
 import openai
+from halo import Halo
+from termcolor import colored
 
-from conf_paai import MODEL, COLORS
+from conf_paai import MODEL, STYLES
 from prompts import PROMPTS
 
 
 openai.api_key  = MODEL['api_key']
 
 
+@Halo(text='Loading', spinner='dots')
 def get_completion_from_messages(messages, model=MODEL['model'], temperature=0):
     response = openai.ChatCompletion.create(
         model=model,
@@ -17,19 +20,17 @@ def get_completion_from_messages(messages, model=MODEL['model'], temperature=0):
 
 
 def set_prompt():
-    print('Reply with number of prompt you would like to use')
+    print(colored('Reply with number of prompt you would like to use','blue'))
     for count, value in enumerate(PROMPTS):
-        print (count, '-', value[0]['content'])
+        print (colored(count, 'yellow'), '-', value[0]['content'])
     return PROMPTS[int(input(">> "))]
 
 
 def show_prompts(conversation):
-    print('Starting prompts:')
+    print(colored('Starting prompts:','blue'))
     for entry in conversation:
         if entry['role'] == 'user':
-            print ('>>', entry['content'])
-        else:
-            print ('<<', entry['content'])
+            print (colored('>>', 'blue'), colored(entry['content'], 'blue'))
 
 
 conversation = set_prompt()
@@ -48,7 +49,6 @@ while True:
             user_input.append(input())
         if not MULTILIE or user_input[-1].endswith('"""'):
             break
-
     ENTRY = "\n".join(user_input)
     if ENTRY.lower() == 'exit()':
         break
@@ -59,4 +59,4 @@ while True:
         conversation.append({'role': 'user', 'content': ENTRY})
         response = get_completion_from_messages(conversation)
         conversation.append({'role': 'system', 'content': response})
-        print(COLORS['CRED'], "<< ", response, COLORS['CEND'])
+        print(colored(STYLES['ITALICS'] + "<< " + response + STYLES['SEND'], 'red'))

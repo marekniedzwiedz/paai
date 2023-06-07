@@ -7,7 +7,7 @@ MODELS = {
 
 MODEL = MODELS['gpt35']
 
-COLORS = {
-    'CRED': '\033[91m',
-    'CEND': '\033[0m'    
+STYLES = {
+    'ITALICS': "\x1B[3m",
+    'SEND': '\x1B[0m',
 }
