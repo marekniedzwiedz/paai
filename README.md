@@ -8,7 +8,7 @@ To use it, you have to:
 4. commands
     - prompt() - select new prompt;
     - exit() - exit;
-    - use """ to start multiline input; you have to finish it as well with """;
+    - use """ to start multiline input; you have to finish it as well with """.
 
 
 I've been using it for a few weeks and find it helpful. I hope you will find it useful as well.
